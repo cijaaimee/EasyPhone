@@ -1,0 +1,68 @@
+package es.cinsua.easyphone.app.ui.incall
+
+import android.app.Application
+import android.os.Bundle
+import android.telecom.Call
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import es.cinsua.easyphone.app.ui.EasyActivity
+import es.cinsua.easyphone.app.ui.components.EasyPhoneScaffold
+
+class InCallActivity : EasyActivity() {
+
+  private val viewModel: InCallViewModel by viewModels { InCallViewModelFactory(application) }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    setContent {
+      EasyPhoneScaffold { paddingValues ->
+        val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+        when (state.callState) {
+          Call.STATE_DISCONNECTED ->
+              finish() // TODO: what happens if the state changes during finish? restart?
+          else -> InCallScreen(modifier = Modifier.padding(paddingValues), uiState = state)
+        }
+      }
+    }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    viewModel.onUiStart()
+  }
+
+  override fun onStop() {
+    super.onStop()
+    if (!isFinishing) {
+      viewModel.onUiHide()
+    }
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    viewModel.onUiDestroy()
+  }
+
+  override fun finish() {
+    // Make sure the activity is completely removed so it doesn't appear in recent apps
+    super.finishAndRemoveTask()
+  }
+}
+
+private class InCallViewModelFactory(private val application: Application) :
+    ViewModelProvider.Factory {
+  override fun <T : ViewModel> create(modelClass: Class<T>): T {
+    val app = application
+    val proximityManager = ProximitySensorManager(app)
+    @Suppress("UNCHECKED_CAST")
+    return InCallViewModel(app, proximityManager) as T
+  }
+}
