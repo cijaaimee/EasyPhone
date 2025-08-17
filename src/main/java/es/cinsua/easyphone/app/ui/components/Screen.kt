@@ -24,7 +24,7 @@ fun ClosableScreen(
   Column(modifier.fillMaxSize()) {
     Row(Modifier.padding(start = 8.dp, bottom = 8.dp)) {
       Spacer(Modifier.weight(1.0f))
-      CloseButton(Modifier.size(56.dp), closeScreen)
+      CloseButton(onClick = closeScreen)
     }
 
     Box(Modifier.weight(1.0f)) { content() }
@@ -33,7 +33,7 @@ fun ClosableScreen(
 
 @Composable
 private fun CloseButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
-  EasyButton(onClick, modifier) {
+  EasyButton(onClick, modifier, padding = 0.dp) {
     Image(
         painter = painterResource(R.drawable.ic_exit),
         modifier = Modifier.size(48.dp),

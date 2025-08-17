@@ -9,6 +9,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.BatteryManager
+import android.provider.ContactsContract
 import android.provider.Settings
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.application
@@ -87,7 +88,7 @@ class TopBarViewModel(application: Application) : AndroidViewModel(application) 
 
   fun onEmergencyClicked() {
     tts.speak("Llamando a Emergencias") {
-      TelecomDialer.dial(application.applicationContext, "112")
+      TelecomDialer.dial(application, "112")
     }
   }
 
@@ -100,17 +101,28 @@ class TopBarViewModel(application: Application) : AndroidViewModel(application) 
   fun onRingerClicked() {
     if (notificationManager.isNotificationPolicyAccessGranted) {
       if (ringerModeState.value == RingerModeState.NORMAL) {
-        tts.speak(" Sonido apagado") { audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT }
+        tts.speak("Sonido apagado") { audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT }
       } else {
         audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
-        tts.speak(" Sonido encendido")
+        tts.speak("Sonido encendido")
       }
     } else {
       // TODO move out of here into a permissions screen
       val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
-      intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+      intent.flags += FLAG_ACTIVITY_NEW_TASK
       application.startActivity(intent)
     }
+  }
+
+  fun onContactsClicked() {
+    val intent = Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI)
+    intent.flags += FLAG_ACTIVITY_NEW_TASK
+    application.startActivity(intent)
+  }
+
+  fun onShutdownClicked() {
+    val intent = Intent(Intent.ACTION_SHUTDOWN)
+    application.sendBroadcast(intent)
   }
 
   override fun onCleared() {

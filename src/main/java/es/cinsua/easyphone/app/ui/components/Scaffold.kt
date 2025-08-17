@@ -18,30 +18,26 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import es.cinsua.easyphone.app.theme.EasyPhoneTheme
+import es.cinsua.easyphone.app.ui.theme.EasyPhoneTheme
 import es.cinsua.easyphone.app.ui.toast.ToastManager
 
 @Composable
-fun EasyPhoneScaffold(content: @Composable BoxScope.(PaddingValues) -> Unit) {
+fun EasyPhoneScaffold(content: @Composable BoxScope.() -> Unit) {
   ImmersiveMode {
     EasyPhoneTheme {
       Scaffold(contentWindowInsets = WindowInsets(0.dp), modifier = Modifier.fillMaxSize()) {
           innerPadding ->
         SafeArea(modifier = Modifier.padding(innerPadding).consumeWindowInsets(innerPadding)) {
-            paddingValues ->
-          content(paddingValues)
+          content()
+
           val toastMessage by ToastManager.message.collectAsStateWithLifecycle()
-          toastMessage?.let { t ->
-            EasyToast(message = t, modifier = Modifier.padding(paddingValues).fillMaxSize())
-          }
+          toastMessage?.let { t -> EasyToast(message = t, modifier = Modifier.fillMaxSize()) }
         }
       }
     }
@@ -49,20 +45,19 @@ fun EasyPhoneScaffold(content: @Composable BoxScope.(PaddingValues) -> Unit) {
 }
 
 @Composable
-private fun SafeArea(
-    modifier: Modifier = Modifier,
-    borderSize: Dp = 16.dp,
-    borderColor: Color = Color.Black,
-    content: @Composable BoxScope.(PaddingValues) -> Unit
-) {
+private fun SafeArea(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
   val paddingValues = PaddingValues(5.dp)
+  val borderSize = 32.dp
+  val borderColor = MaterialTheme.colorScheme.background
+  val cornerShape = RoundedCornerShape(4.dp)
 
   Box(modifier = modifier.fillMaxSize().background(borderColor).padding(borderSize)) {
     Surface(
-        modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(4.dp)),
-        color = MaterialTheme.colorScheme.background) {
-          content(paddingValues)
-        }
+        modifier = Modifier.fillMaxSize().clip(cornerShape),
+        color = MaterialTheme.colorScheme.background,
+    ) {
+      Box(modifier = Modifier.padding(paddingValues)) { content() }
+    }
   }
 }
 
@@ -84,6 +79,5 @@ private fun ImmersiveMode(content: @Composable () -> Unit) {
       }
     }
   }
-
   content()
 }

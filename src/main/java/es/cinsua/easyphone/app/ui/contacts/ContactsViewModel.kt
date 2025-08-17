@@ -1,4 +1,4 @@
-package es.cinsua.easyphone.app.ui.dialer
+package es.cinsua.easyphone.app.ui.contacts
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -15,15 +15,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-data class DialerUiState(
+data class ContactsUiState(
     val isLoading: Boolean = true,
     val currentIndex: Int = 0,
     val contacts: List<ContactInfo> = listOf()
 )
 
-class DialerViewModel(application: Application) : AndroidViewModel(application) {
+class ContactsViewModel(application: Application) : AndroidViewModel(application) {
 
-  private val _uiState = MutableStateFlow(DialerUiState(isLoading = true))
+  private val _uiState = MutableStateFlow(ContactsUiState(isLoading = true))
   val uiState = _uiState.asStateFlow()
   val tts = TtsEngine(application)
 

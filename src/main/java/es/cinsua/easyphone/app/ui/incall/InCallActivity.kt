@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.telecom.Call
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,13 +20,13 @@ class InCallActivity : EasyActivity() {
     super.onCreate(savedInstanceState)
 
     setContent {
-      EasyPhoneScaffold { paddingValues ->
+      EasyPhoneScaffold {
         val state by viewModel.uiState.collectAsStateWithLifecycle()
 
         when (state.callState) {
           Call.STATE_DISCONNECTED ->
               finish() // TODO: what happens if the state changes during finish? restart?
-          else -> InCallScreen(modifier = Modifier.padding(paddingValues), uiState = state)
+          else -> InCallScreen(uiState = state)
         }
       }
     }

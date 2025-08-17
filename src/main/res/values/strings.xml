@@ -1,3 +1,42 @@
 <resources>
-    <string name="app_name">EasyPhone</string>
+    <string name="app_name" translatable="false">EasyPhone</string>
+
+    <string name="common_text_loading">Cargando…</string>
+
+    <!-- Home screen -->
+    <string name="home_tutorial_unlock" translatable="false">Pulsa el candado para desbloquear el teléfono</string>
+    <string name="home_tutorial_call" translatable="false">Pulsa la agenda para llamar</string>
+    <string name="home_time_format" translatable="false">hh:mm</string>
+    <string name="home_date_format" translatable="false">EEEE, d \'de\' MMMM \'de\' yyyy</string>
+    <string name="home_button_unlock" translatable="false">Desbloquear</string>
+    <string name="home_button_contacts" translatable="false">Agenda</string>
+
+    <string name="home_button_topbar_sos" translatable="false">Botón de emergencia SOS</string>
+    <string name="home_button_topbar_battery" translatable="false">Batería</string>
+    <string name="home_button_topbar_ringer" translatable="false">Control de volumen</string>
+    <string name="home_button_topbar_options" translatable="false">Opciones</string>
+    <string name="home_button_topbar_contacts" translatable="false">Contactos</string>
+    <string name="home_button_topbar_settings" translatable="false">Ajustes</string>
+    <string name="home_button_topbar_apps" translatable="false">Aplicaciones</string>
+    <string name="home_button_topbar_shutdown" translatable="false">Apagar</string>
+
+    <!-- In-call screen -->
+    <string name="incall_tutorial_pickup" translatable="false">Pulsa el teléfono para responder</string>
+    <string name="incall_tutorial_disconnect" translatable="false">Pulsa la X para colgar</string>
+    <string name="incall_state_dialing">Llamando</string>
+    <string name="incall_state_holding">Llamada en espera</string>
+    <string name="incall_state_ringing">Llamada entrante</string>
+    <string name="incall_state_disconnected">Llamada terminada</string>
+    <string name="incall_state_active">Llamada en curso</string>
+    <string name="incall_state_unknown">Llamada (estado %1$s)</string>
+    <string name="incall_button_pickup">Contestar</string>
+    <string name="incall_button_disconnect">Colgar</string>
+
+    <!-- Contacts screen -->
+    <string name="contacts_tutorial_move" translatable="false">Pulsa las flechas para buscar una persona</string>
+    <string name="contacts_tutorial_call" translatable="false">Pulsa el teléfono para llamar</string>
+    <string name="contacts_text_no_contacts">No hay contactos</string>
+    <string name="contacts_button_call">Llamar</string>
+    <string name="contacts_button_previous">Anterior</string>
+    <string name="contacts_button_next">Siguiente</string>
 </resources>

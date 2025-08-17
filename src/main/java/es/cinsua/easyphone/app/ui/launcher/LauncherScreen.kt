@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,11 +25,14 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import es.cinsua.easyphone.app.R
 import es.cinsua.easyphone.app.ui.components.ClosableScreen
+import es.cinsua.easyphone.app.ui.components.FullScreenText
 
 @Composable
 fun LauncherScreen(
@@ -40,7 +42,7 @@ fun LauncherScreen(
   ClosableScreen(closeScreen = closeScreen) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     if (state.isLoading) {
-      CircularProgressIndicator()
+      FullScreenText(stringResource(R.string.common_text_loading))
     } else {
       LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(items = state.apps, key = { app -> app.packageName }) { app -> AppRow(app = app) }
@@ -60,14 +62,10 @@ private fun AppRow(app: AppInfo) {
               .clickable { launchApp(context, app.packageName) }
               .padding(horizontal = 16.dp, vertical = 8.dp),
       verticalAlignment = Alignment.CenterVertically) {
-        if (painter != null) {
-          Image(
-              painter = painter,
-              contentDescription = "${app.label} Icon",
-              modifier = Modifier.size(48.dp))
-        } else {
-          Spacer(modifier = Modifier.size(48.dp))
-        }
+        Image(
+            painter = painter,
+            contentDescription = app.label,
+            modifier = Modifier.size(48.dp))
 
         Spacer(modifier = Modifier.width(16.dp))
 
@@ -83,9 +81,7 @@ private fun launchApp(context: Context, packageName: String) {
 }
 
 @Composable
-private fun rememberDrawablePainter(drawable: Drawable?): Painter? {
-  if (drawable == null) return null
-
+private fun rememberDrawablePainter(drawable: Drawable): Painter {
   return remember(drawable) {
     object : Painter() {
       override val intrinsicSize: Size

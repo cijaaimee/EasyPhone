@@ -1,6 +1,7 @@
 package es.cinsua.easyphone.app.ui.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,25 +11,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
+import es.cinsua.easyphone.app.R
+import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlinx.coroutines.delay
 
 @Composable
 internal fun DigitalClock(
     modifier: Modifier = Modifier,
-    timeStyle: TextStyle = TextStyle(fontSize = 72.sp, fontWeight = FontWeight.Bold),
-    dateStyle: TextStyle = TextStyle(fontSize = 40.sp, fontWeight = FontWeight.Medium)
+    timeStyle: TextStyle = MaterialTheme.typography.displayLarge,
+    dateStyle: TextStyle = MaterialTheme.typography.titleMedium
 ) {
-  var currentTime by remember { mutableStateOf("") }
-  var currentDate by remember { mutableStateOf("") }
+  val timeFormat = stringResource(R.string.home_time_format)
+  val dateFormat = stringResource(R.string.home_date_format)
+  val timeFormatter = remember { DateTimeFormatter.ofPattern(timeFormat) }
+  val dateFormatter = remember { DateTimeFormatter.ofPattern(dateFormat) }
 
-  val timeFormatter = remember { DateTimeFormatter.ofPattern("hh:mm") }
-  val dateFormatter = remember { DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM 'de' yyyy") }
+  val now = LocalDateTime.now()
+  var currentTime by remember { mutableStateOf(timeFormatter.format(now)) }
+  var currentDate by remember { mutableStateOf(dateFormatter.format(now)) }
 
   LaunchedEffect(key1 = true) {
     while (true) {

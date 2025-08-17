@@ -14,13 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import es.cinsua.easyphone.app.theme.BoxColor
+import es.cinsua.easyphone.app.ui.theme.BoxColor
 
 @Composable
 fun EasyBox(
@@ -29,7 +26,7 @@ fun EasyBox(
     backgroundColor: Color = BoxColor.Red,
     outlineColor: Color = Color.Black,
     outlineWidth: Dp = 1.dp,
-    content: @Composable BoxScope.(PaddingValues) -> Unit
+    content: @Composable BoxScope.() -> Unit
 ) {
   val buttonShape = RoundedCornerShape(8.dp)
   val paddingValues = PaddingValues(padding)
@@ -40,23 +37,18 @@ fun EasyBox(
           modifier
               .border(width = outlineWidth, color = outlineColor, shape = buttonShape)
               .clip(buttonShape)
-              .background(backgroundColor)) {
-        content(paddingValues)
+              .background(backgroundColor)
+              .padding(paddingValues)) {
+        content()
       }
 }
 
 @Composable
 fun TutorialBox(text: String) {
-  EasyBox(backgroundColor = BoxColor.Blue, modifier = Modifier.fillMaxWidth()) { paddingValues ->
+  EasyBox(backgroundColor = BoxColor.Blue, modifier = Modifier.fillMaxWidth()) {
     Text(
         text = text,
-        style =
-            TextStyle(
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Medium,
-            ),
         textAlign = TextAlign.Center,
-        modifier = Modifier.padding(paddingValues),
     )
   }
 }

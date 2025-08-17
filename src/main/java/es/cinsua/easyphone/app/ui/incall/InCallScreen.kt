@@ -7,24 +7,29 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import es.cinsua.easyphone.app.R
 import es.cinsua.easyphone.app.ui.components.EasyBox
 import es.cinsua.easyphone.app.ui.components.EasyButton
 import es.cinsua.easyphone.app.ui.components.TutorialBox
 
 @Composable
 fun InCallScreen(modifier: Modifier = Modifier, uiState: InCallUiState) {
-  Column(modifier = modifier.fillMaxSize().padding(vertical = 20.dp, horizontal = 14.dp)) {
+  Column(modifier = modifier.fillMaxSize()) {
     CallerId(uiState)
 
     Spacer(modifier = Modifier.size(8.dp))
@@ -41,67 +46,83 @@ fun InCallScreen(modifier: Modifier = Modifier, uiState: InCallUiState) {
 
 @Composable
 private fun CallerId(uiState: InCallUiState) {
-  EasyBox { paddingValues ->
-    Column(modifier = Modifier.padding(paddingValues).fillMaxWidth()) {
+  EasyBox {
+    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
       Text(
           text = getCallTitle(uiState),
-          style = TextStyle(fontSize = 36.sp, fontWeight = FontWeight.Medium),
-          textAlign = TextAlign.Center,
-          modifier = Modifier.fillMaxWidth())
+          style = MaterialTheme.typography.titleMedium,
+          textAlign = TextAlign.Center)
       Text(
           text = uiState.callerContact?.displayName ?: uiState.callerNumber,
-          style = TextStyle(fontSize = 54.sp, fontWeight = FontWeight.Medium),
-          textAlign = TextAlign.Center,
-          modifier = Modifier.fillMaxWidth())
+          style = MaterialTheme.typography.titleLarge,
+          textAlign = TextAlign.Center)
     }
   }
 }
 
+@Composable
 private fun getCallTitle(uiState: InCallUiState) =
     when (uiState.callState) {
-      Call.STATE_DIALING -> "Llamando"
-      Call.STATE_HOLDING -> "Llamada en espera"
-      Call.STATE_RINGING -> "Llamada entrante"
+      Call.STATE_DIALING -> stringResource(R.string.incall_state_dialing)
+      Call.STATE_HOLDING -> stringResource(R.string.incall_state_holding)
+      Call.STATE_RINGING -> stringResource(R.string.incall_state_ringing)
       Call.STATE_DISCONNECTING,
-      Call.STATE_DISCONNECTED -> "Llamada terminada"
-      Call.STATE_ACTIVE -> "Llamada en curso"
-      else -> "Llamada en estado desconocido: ${uiState.callState}"
+      Call.STATE_DISCONNECTED -> stringResource(R.string.incall_state_disconnected)
+      Call.STATE_ACTIVE -> stringResource(R.string.incall_state_active)
+      else -> stringResource(R.string.incall_state_unknown, uiState.callState)
     }
 
 @Composable
 private fun ActionButtons(uiState: InCallUiState, viewModel: InCallViewModel = viewModel()) {
   Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
     if (uiState.callState == Call.STATE_RINGING) {
-      ActionButton(onClick = { viewModel.answerCall() }, text = "✓")
+      ActionButton(
+          onClick = { viewModel.answerCall() },
+          icon = Icons.Filled.Phone,
+          description = stringResource(R.string.incall_button_pickup))
     }
     if (!uiState.isDisconnectedOrAboutTo) {
-      ActionButton(onClick = { viewModel.disconnectCall() }, text = "╳")
+      ActionButton(
+          onClick = { viewModel.disconnectCall() },
+          icon = Icons.Filled.Clear,
+          description = stringResource(R.string.incall_button_disconnect))
     }
   }
 }
 
 @Composable
 private fun ActionButton(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    text: String,
+    icon: ImageVector,
+    description: String,
 ) {
-  EasyButton(onClick = onClick, modifier = Modifier.size(128.dp)) { paddingValues ->
-    Text(
-        text = text,
-        modifier = Modifier.padding(paddingValues).fillMaxSize(),
-        style = TextStyle(textAlign = TextAlign.Center, fontSize = 96.sp))
+  EasyButton(onClick = onClick) {
+    Icon(
+        modifier = modifier.size(96.dp),
+        imageVector = icon,
+        contentDescription = description,
+    )
   }
 }
 
 @Composable
 private fun Tutorial(uiState: InCallUiState) {
-  if (!uiState.isDisconnectedOrAboutTo) {
-    TutorialBox(getTutorialText(uiState))
+  val text = getTutorialText(uiState)
+  if (text != null) {
+    TutorialBox(text)
   }
 }
 
+@Composable
 private fun getTutorialText(uiState: InCallUiState) =
-    when (uiState.callState) {
-      Call.STATE_RINGING -> "Pulsa ✓ para responder\nPulsa ╳ para colgar"
-      else -> "Pulsa ╳ para colgar"
-    }
+    if (uiState.isDisconnectedOrAboutTo) null
+    else
+        when (uiState.callState) {
+          Call.STATE_RINGING ->
+              """
+            ${stringResource(R.string.incall_tutorial_pickup)}
+            ${stringResource(R.string.incall_tutorial_disconnect)}"""
+                  .trimIndent()
+          else -> stringResource(R.string.incall_tutorial_disconnect)
+        }
