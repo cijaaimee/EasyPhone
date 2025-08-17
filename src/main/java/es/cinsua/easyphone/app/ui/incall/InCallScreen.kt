@@ -18,9 +18,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import es.cinsua.easyphone.app.theme.BoxColor
 import es.cinsua.easyphone.app.ui.components.EasyBox
 import es.cinsua.easyphone.app.ui.components.EasyButton
+import es.cinsua.easyphone.app.ui.components.TutorialBox
 
 @Composable
 fun InCallScreen(modifier: Modifier = Modifier, uiState: InCallUiState) {
@@ -96,18 +96,7 @@ private fun ActionButton(
 @Composable
 private fun Tutorial(uiState: InCallUiState) {
   if (!uiState.isDisconnectedOrAboutTo) {
-    EasyBox(backgroundColor = BoxColor.Blue, modifier = Modifier.fillMaxWidth()) { paddingValues ->
-      Text(
-          text = getTutorialText(uiState),
-          style =
-              TextStyle(
-                  fontSize = 24.sp,
-                  fontWeight = FontWeight.Medium,
-              ),
-          textAlign = TextAlign.Center,
-          modifier = Modifier.padding(paddingValues),
-      )
-    }
+    TutorialBox(getTutorialText(uiState))
   }
 }
 

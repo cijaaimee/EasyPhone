@@ -27,7 +27,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import es.cinsua.easyphone.app.theme.EasyPhoneTheme
-import es.cinsua.easyphone.app.toast.ToastManager
+import es.cinsua.easyphone.app.ui.toast.ToastManager
 
 @Composable
 fun EasyPhoneScaffold(content: @Composable BoxScope.(PaddingValues) -> Unit) {

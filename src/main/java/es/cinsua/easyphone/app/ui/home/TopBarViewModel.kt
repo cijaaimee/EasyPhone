@@ -13,9 +13,9 @@ import android.provider.Settings
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.application
 import es.cinsua.easyphone.app.telecom.TelecomDialer
-import es.cinsua.easyphone.app.toast.ToastManager
 import es.cinsua.easyphone.app.tts.TtsEngine
 import es.cinsua.easyphone.app.ui.home.RingerModeState.Companion.toRingerModeState
+import es.cinsua.easyphone.app.ui.toast.ToastManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

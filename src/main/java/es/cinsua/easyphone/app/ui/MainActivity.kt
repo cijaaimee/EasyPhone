@@ -19,7 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import es.cinsua.easyphone.app.ui.components.EasyPhoneScaffold
-import es.cinsua.easyphone.app.ui.dialer.PhoneScreen
+import es.cinsua.easyphone.app.ui.dialer.DialerScreen
 import es.cinsua.easyphone.app.ui.home.HomeScreen
 import es.cinsua.easyphone.app.ui.launcher.LauncherScreen
 
@@ -65,7 +65,7 @@ private fun MainNavigation(modifier: Modifier, navController: NavHostController)
       exitTransition = { ExitTransition.None }) {
         screen(route = NavRoutes.HOME) { HomeScreen { route -> navController.navigate(route) } }
 
-        screen(route = NavRoutes.DIALER) { PhoneScreen { navController.navigate(NavRoutes.HOME) } }
+        screen(route = NavRoutes.DIALER) { DialerScreen { navController.navigate(NavRoutes.HOME) } }
 
         screen(route = NavRoutes.LAUNCHER) {
           LauncherScreen { navController.navigate(NavRoutes.HOME) }

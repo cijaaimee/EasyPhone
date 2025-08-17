@@ -1,4 +1,4 @@
-package es.cinsua.easyphone.app.toast
+package es.cinsua.easyphone.app.ui.toast
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

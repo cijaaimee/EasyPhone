@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +22,7 @@ fun ClosableScreen(
     content: @Composable BoxScope.() -> Unit
 ) {
   Column(modifier.fillMaxSize()) {
-    Row {
+    Row(Modifier.padding(start = 8.dp, bottom = 8.dp)) {
       Spacer(Modifier.weight(1.0f))
       CloseButton(Modifier.size(56.dp), closeScreen)
     }
