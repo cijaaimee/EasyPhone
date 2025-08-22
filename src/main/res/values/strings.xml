@@ -4,11 +4,11 @@
     <string name="common_text_loading">Cargando…</string>
 
     <!-- Home screen -->
-    <string name="home_tutorial_unlock" translatable="false">Pulsa el candado para desbloquear el teléfono</string>
+    <string name="home_tutorial_unlock" translatable="false">Pulsa el candado para usar el teléfono</string>
     <string name="home_tutorial_call" translatable="false">Pulsa la agenda para llamar</string>
     <string name="home_time_format" translatable="false">hh:mm</string>
     <string name="home_date_format" translatable="false">EEEE, d \'de\' MMMM \'de\' yyyy</string>
-    <string name="home_button_unlock" translatable="false">Desbloquear</string>
+    <string name="home_button_unlock" translatable="false">Usar teléfono</string>
     <string name="home_button_contacts" translatable="false">Agenda</string>
 
     <string name="home_button_topbar_sos" translatable="false">Botón de emergencia SOS</string>
@@ -23,11 +23,11 @@
     <!-- In-call screen -->
     <string name="incall_tutorial_pickup" translatable="false">Pulsa el teléfono para responder</string>
     <string name="incall_tutorial_disconnect" translatable="false">Pulsa la X para colgar</string>
-    <string name="incall_state_dialing">Llamando</string>
+    <string name="incall_state_dialing">Llamando a</string>
     <string name="incall_state_holding">Llamada en espera</string>
-    <string name="incall_state_ringing">Llamada entrante</string>
-    <string name="incall_state_disconnected">Llamada terminada</string>
-    <string name="incall_state_active">Llamada en curso</string>
+    <string name="incall_state_ringing">Te está llamando</string>
+    <string name="incall_state_disconnected">Llamada colgada</string>
+    <string name="incall_state_active">Estás hablando con</string>
     <string name="incall_state_unknown">Llamada (estado %1$s)</string>
     <string name="incall_button_pickup">Contestar</string>
     <string name="incall_button_disconnect">Colgar</string>
