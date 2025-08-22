@@ -102,7 +102,9 @@ private fun SliderArrows(viewModel: ContactsViewModel = viewModel()) {
         onClick = { viewModel.onPreviousContact() },
         text = stringResource(R.string.contacts_button_previous),
         iconPainter = rememberVectorPainter(Icons.AutoMirrored.Filled.ArrowBack),
-        iconPosition = IconTextButton.IconPosition.Start)
+        iconPosition = IconTextButton.IconPosition.Top,
+        iconSize = 64.dp,
+        modifier = Modifier.width(128.dp))
 
     Spacer(Modifier.width(12.dp))
 
@@ -110,6 +112,8 @@ private fun SliderArrows(viewModel: ContactsViewModel = viewModel()) {
         onClick = { viewModel.onNextContact() },
         text = stringResource(R.string.contacts_button_next),
         iconPainter = rememberVectorPainter(Icons.AutoMirrored.Filled.ArrowForward),
-        iconPosition = IconTextButton.IconPosition.End)
+        iconPosition = IconTextButton.IconPosition.Top,
+        iconSize = 64.dp,
+        modifier = Modifier.width(128.dp))
   }
 }

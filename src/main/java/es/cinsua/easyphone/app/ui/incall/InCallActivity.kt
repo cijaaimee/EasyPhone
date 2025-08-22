@@ -3,6 +3,7 @@ package es.cinsua.easyphone.app.ui.incall
 import android.app.Application
 import android.os.Bundle
 import android.telecom.Call
+import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
@@ -18,6 +19,11 @@ class InCallActivity : EasyActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    window.addFlags(
+        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+            WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES or
+            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
 
     setContent {
       EasyPhoneScaffold {
