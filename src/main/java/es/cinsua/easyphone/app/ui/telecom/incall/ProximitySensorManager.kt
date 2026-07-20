@@ -1,4 +1,4 @@
-package es.cinsua.easyphone.app.ui.incall
+package es.cinsua.easyphone.app.ui.telecom.incall
 
 import android.content.Context
 import android.hardware.Sensor

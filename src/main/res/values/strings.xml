@@ -10,6 +10,11 @@
     <string name="home_date_format" translatable="false">EEEE, d \'de\' MMMM \'de\' yyyy</string>
     <string name="home_button_unlock" translatable="false">Usar teléfono</string>
     <string name="home_button_contacts" translatable="false">Agenda</string>
+    <string name="home_button_call_log" translatable="false">Llamadas\nperdidas</string>
+    <plurals name="home_new_missed_calls">
+        <item quantity="one">%1$d nueva llamada perdida</item>
+        <item quantity="other">%1$d nuevas llamadas perdidas</item>
+    </plurals>
 
     <string name="home_button_topbar_sos" translatable="false">Botón de emergencia SOS</string>
     <string name="home_button_topbar_battery" translatable="false">Batería</string>
@@ -18,6 +23,7 @@
     <string name="home_button_topbar_contacts" translatable="false">Contactos</string>
     <string name="home_button_topbar_settings" translatable="false">Ajustes</string>
     <string name="home_button_topbar_apps" translatable="false">Aplicaciones</string>
+    <string name="home_button_topbar_call_log" translatable="false">Llamadas recientes</string>
     <string name="home_button_topbar_shutdown" translatable="false">Apagar</string>
 
     <!-- In-call screen -->
@@ -39,4 +45,11 @@
     <string name="contacts_button_call">Llamar</string>
     <string name="contacts_button_previous">Anterior</string>
     <string name="contacts_button_next">Siguiente</string>
+
+    <!-- Call log screen -->
+    <string name="call_log_tutorial">Llamadas recientes</string>
+    <string name="call_log_tutorial_missed">Llamadas perdidas</string>
+    <string name="call_log_no_recent_calls">No hay llamadas recientes</string>
+    <string name="call_log_no_missed_calls">No hay llamadas perdidas</string>
+    <string name="call_log_datetime_format" translatable="false">EEEE, d \'de\' MMMM \'a las\' HH:mm</string>
 </resources>

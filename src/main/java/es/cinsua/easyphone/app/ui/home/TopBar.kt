@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -100,6 +101,11 @@ private fun RowScope.OptionsButton(
               text = { Text(stringResource(R.string.home_button_topbar_contacts), style = MaterialTheme.typography.bodyLarge) },
               leadingIcon = { Icon(Icons.Outlined.AccountCircle, contentDescription = null, modifier = Modifier.size(32.dp)) },
               onClick = { viewModel.onContactsClicked() },
+          )
+          DropdownMenuItem(
+              text = { Text(stringResource(R.string.home_button_topbar_call_log), style = MaterialTheme.typography.bodyLarge) },
+              leadingIcon = { Icon(Icons.Outlined.Call, contentDescription = null, modifier = Modifier.size(32.dp)) },
+              onClick = { navigateTo(NavRoutes.CALL_LOG) },
           )
           DropdownMenuItem(
               text = { Text(stringResource(R.string.home_button_topbar_apps), style = MaterialTheme.typography.bodyLarge) },

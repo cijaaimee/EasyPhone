@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,7 +48,21 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), navigateTo: (String) -> U
 
     Spacer(modifier = Modifier.height(12.dp))
 
+    MissedCalls(viewModel)
+
     ActionButtons(navigateTo)
+  }
+}
+
+@Composable
+private fun MissedCalls(viewModel: HomeViewModel) {
+  val missedCalls = viewModel.missedCalls.collectAsStateWithLifecycle()
+  if (missedCalls.value > 0) {
+    EasyBox(modifier = Modifier.fillMaxWidth()) {
+      Text(pluralStringResource(R.plurals.home_new_missed_calls, missedCalls.value, missedCalls.value))
+    }
+
+    Spacer(modifier = Modifier.height(12.dp))
   }
 }
 
@@ -64,6 +79,13 @@ private fun ActionButtons(navigateTo: (String) -> Unit, viewModel: HomeViewModel
         painter = painterResource(R.drawable.ic_contacts),
         text = stringResource(R.string.home_button_contacts),
         onClick = { navigateTo(NavRoutes.CONTACTS) })
+
+    Spacer(modifier = Modifier.height(12.dp))
+
+    IconTextButton(
+        painter = painterResource(R.drawable.ic_call_log),
+        text = stringResource(R.string.home_button_call_log),
+        onClick = { navigateTo(NavRoutes.CALL_LOG_MISSED) })
   }
 }
 
@@ -76,7 +98,7 @@ private fun IconTextButton(painter: Painter, text: String, onClick: () -> Unit) 
         modifier = Modifier.size(128.dp),
         contentScale = ContentScale.Fit,
     )
-    Text(text = text, textAlign = TextAlign.Center, maxLines = 1, overflow = TextOverflow.Ellipsis)
+    Text(text = text, textAlign = TextAlign.Center, overflow = TextOverflow.Ellipsis)
   }
 }
 

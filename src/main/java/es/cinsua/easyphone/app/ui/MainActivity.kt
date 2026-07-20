@@ -18,9 +18,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import es.cinsua.easyphone.app.ui.components.EasyPhoneScaffold
-import es.cinsua.easyphone.app.ui.contacts.ContactsScreen
 import es.cinsua.easyphone.app.ui.home.HomeScreen
 import es.cinsua.easyphone.app.ui.launcher.LauncherScreen
+import es.cinsua.easyphone.app.ui.telecom.contacts.ContactsScreen
+import es.cinsua.easyphone.app.ui.telecom.log.CallLogScreen
 
 class MainActivity : EasyActivity() {
 
@@ -52,6 +53,8 @@ object NavRoutes {
   const val HOME = "home"
   const val CONTACTS = "contacts"
   const val LAUNCHER = "phone"
+  const val CALL_LOG_MISSED = "call_log_missed"
+  const val CALL_LOG = "call_log"
 }
 
 @Composable
@@ -61,14 +64,22 @@ private fun MainNavigation(navController: NavHostController) {
       startDestination = NavRoutes.HOME,
       enterTransition = { EnterTransition.None },
       exitTransition = { ExitTransition.None }) {
-        screen(route = NavRoutes.HOME) { HomeScreen { route -> navController.navigate(route) } }
+    screen(route = NavRoutes.HOME) { HomeScreen { route -> navController.navigate(route) } }
 
-        screen(route = NavRoutes.CONTACTS) { ContactsScreen { navController.navigate(NavRoutes.HOME) } }
+    screen(route = NavRoutes.CONTACTS) { ContactsScreen { navController.navigate(NavRoutes.HOME) } }
 
-        screen(route = NavRoutes.LAUNCHER) {
-          LauncherScreen { navController.navigate(NavRoutes.HOME) }
-        }
-      }
+    screen(route = NavRoutes.LAUNCHER) {
+      LauncherScreen { navController.navigate(NavRoutes.HOME) }
+    }
+
+    screen(route = NavRoutes.CALL_LOG_MISSED) {
+      CallLogScreen(true) { navController.navigate(NavRoutes.HOME) }
+    }
+
+    screen(route = NavRoutes.CALL_LOG) {
+      CallLogScreen(false) { navController.navigate(NavRoutes.HOME) }
+    }
+  }
 }
 
 /**

@@ -1,4 +1,4 @@
-package es.cinsua.easyphone.app.ui.contacts
+package es.cinsua.easyphone.app.ui.telecom.contacts
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
